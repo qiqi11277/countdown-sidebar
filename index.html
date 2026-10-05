@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CountdownSideBar 侧边倒计时 · 产品介绍</title>
+<style>
+:root{
+  --bg:#0B0F16;
+  --page:#12161F;
+  --card:#1A2130;
+  --card2:#151B26;
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(255,255,255,.06);
+  --accent:#FFB146;
+  --accent-soft:rgba(255,177,70,.14);
+  --teal:#48D2C6;
+  --text:#E9EFF7;
+  --muted:#A9BBD0;
+  --dim:#8496AC;
+  --shadow:0 24px 60px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  padding:0;
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(255,177,70,.10), transparent 60%),
+    radial-gradient(760px 460px at 92% 4%, rgba(72,210,198,.09), transparent 62%),
+    var(--bg);
+  color:var(--text);
+  font-family:"Segoe UI","Microsoft YaHei UI","Microsoft YaHei",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.75;
+}
+.page-wrapper{
+  padding:36px 20px 56px;
+}
+.page{
+  max-width:980px;
+  margin:0 auto;
+  background:var(--page);
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+/* ---------- 页眉 ---------- */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:14px 28px;
+  background:linear-gradient(100deg,#1A1F2B 0%,#243044 48%,#7A4E12 100%);
+  border-bottom:1px solid var(--line);
+  color:#F2F6FB;
+  font-size:13px;
+  letter-spacing:.4px;
+}
+.header .left{font-weight:600;}
+.header .right{color:rgba(242,246,251,.72);}
+/* ---------- 内容区 ---------- */
+.content{
+  padding:40px 44px 34px;
+}
+h1{
+  margin:0 0 10px;
+  font-size:34px;
+  line-height:1.3;
+  text-align:center;
+  letter-spacing:.5px;
+  font-weight:700;
+  background:linear-gradient(92deg,#FFFFFF 8%,#FFD79A 52%,#FFB146 96%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.tagline{
+  text-align:center;
+  color:var(--accent);
+  font-size:17px;
+  font-weight:600;
+  letter-spacing:.6px;
+  margin-bottom:16px;
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px 26px;
+  font-size:13.5px;
+  color:var(--muted);
+  padding:12px 0 4px;
+}
+.meta strong{color:var(--dim);font-weight:600;margin-right:4px;}
+.abstract{
+  margin:22px 0 8px;
+  padding:16px 20px;
+  border-left:4px solid var(--accent);
+  border-radius:0 12px 12px 0;
+  background:linear-gradient(90deg,var(--accent-soft),rgba(255,177,70,0));
+  color:#DCE6F2;
+  font-size:14.5px;
+  font-style:italic;
+}
+/* ---------- 标题 ---------- */
+h2{
+  position:relative;
+  margin:46px 0 18px;
+  padding:0 0 10px 16px;
+  font-size:21px;
+  font-weight:700;
+  letter-spacing:.4px;
+  border-bottom:1px solid var(--line);
+}
+h2::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:6px;
+  width:5px;
+  height:20px;
+  border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--teal));
+}
+p{
+  margin:0 0 14px;
+  text-indent:2em;
+  color:#D5DFEC;
+  font-size:15.5px;
+}
+/* ---------- 列表 ---------- */
+ul,ol{
+  margin:0 0 16px;
+  padding-left:0;
+  list-style:none;
+}
+ul li,ol li{
+  position:relative;
+  margin:0 0 11px;
+  padding-left:30px;
+  color:#D5DFEC;
+  font-size:15px;
+}
+ul li::before{
+  content:"";
+  position:absolute;
+  left:8px;
+  top:.72em;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px rgba(255,177,70,.16);
+}
+ol{counter-reset:item;}
+ol li{counter-increment:item;}
+ol li::before{
+  content:counter(item);
+  position:absolute;
+  left:0;
+  top:.28em;
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  background:rgba(72,210,198,.14);
+  color:var(--teal);
+  font-size:12px;
+  font-weight:700;
+  line-height:20px;
+  text-align:center;
+  font-family:Consolas,"Segoe UI",sans-serif;
+}
+li strong{color:#FFFFFF;font-weight:600;}
+.tag{
+  display:inline-block;
+  margin:0 6px 4px 0;
+  padding:2px 9px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:12.5px;
+}
+/* ---------- 表格 ---------- */
+.table-wrapper{
+  width:100%;
+  overflow-x:auto;
+  margin:6px 0 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+table{
+  width:100%;
+  min-width:600px;
+  border-collapse:collapse;
+  font-size:14px;
+}
+thead th{
+  background:#252E40;
+  color:#FFFFFF;
+  text-align:left;
+  font-weight:600;
+  padding:12px 14px;
+  white-space:nowrap;
+  letter-spacing:.3px;
+}
+tbody td{
+  padding:11px 14px;
+  color:#CFDAE8;
+  border-top:1px solid var(--line2);
+  vertical-align:top;
+}
+tbody tr:nth-child(even){background:rgba(255,255,255,.032);}
+tbody tr:hover{background:rgba(255,177,70,.08);}
+tbody td:first-child{color:#FFFFFF;font-weight:600;}
+/* ---------- 图表 / 图片占位 ---------- */
+.chart-placeholder{
+  margin:14px 0 18px;
+  padding:30px 22px;
+  text-align:center;
+  border:1px dashed rgba(255,255,255,.22);
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  color:var(--dim);
+  font-size:14px;
+}
+.chart-placeholder .icon{
+  font-size:13px;
+  letter-spacing:4px;
+  color:var(--accent);
+  margin-bottom:8px;
+  font-weight:600;
+}
+/* ---------- 首屏预览 ---------- */
+.hero-preview{
+  display:grid;
+  grid-template-columns:1.06fr .94fr;
+  gap:22px;
+  align-items:center;
+  margin:26px 0 10px;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(140deg,rgba(255,177,70,.07),rgba(72,210,198,.05) 60%,rgba(255,255,255,.02));
+}
+.mock-wrap{display:flex;flex-direction:column;gap:14px;align-items:center;}
+.mock-side{
+  width:100%;
+  max-width:330px;
+  padding:16px 18px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(150deg,rgba(27,42,58,.96),rgba(24,34,48,.94));
+  box-shadow:0 18px 38px rgba(0,0,0,.5);
+}
+.mock-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);}
+.mock-head b{color:var(--accent);font-size:19px;}
+.mock-badge{
+  padding:1px 8px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  font-size:11px;
+  white-space:nowrap;
+}
+.mock-num-row{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:8px 0 10px;}
+.mock-num{
+  font-family:Consolas,"Segoe UI",monospace;
+  font-size:44px;
+  font-weight:700;
+  color:var(--accent);
+  line-height:1;
+}
+.mock-unit{font-size:16px;color:var(--muted);padding-bottom:3px;}
+.mock-clock{
+  font-family:Consolas,"Segoe UI",monospace;
+  font-size:16px;
+  color:var(--muted);
+  padding-bottom:4px;
+}
+.mock-track{height:4px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden;}
+.mock-track i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),#FFD79A);}
+.mock-foot{margin-top:9px;text-align:center;font-size:11.5px;color:var(--dim);}
+.mock-mini{
+  width:196px;
+  padding:9px 12px 8px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(150deg,rgba(27,42,58,.96),rgba(24,34,48,.94));
+  box-shadow:0 12px 26px rgba(0,0,0,.45);
+  text-align:center;
+}
+.mock-mini .m1{font-size:10.5px;color:var(--dim);}
+.mock-mini .m2{font-family:Consolas,"Segoe UI",monospace;font-size:22px;font-weight:700;color:var(--accent);line-height:1.25;}
+.mock-mini .m3{height:3px;border-radius:2px;background:rgba(255,255,255,.16);margin-top:6px;overflow:hidden;}
+.mock-mini .m3 i{display:block;height:100%;width:62%;background:var(--accent);}
+.mock-note{font-size:11.5px;color:var(--dim);text-align:center;letter-spacing:.3px;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.stat{
+  padding:16px 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
+  text-align:center;
+}
+.stat .v{
+  font-family:Consolas,"Segoe UI",monospace;
+  font-size:25px;
+  font-weight:700;
+  color:var(--accent);
+  line-height:1.25;
+}
+.stat .k{font-size:12.5px;color:var(--muted);margin-top:2px;}
+/* ---------- 功能矩阵 ---------- */
+.fn-group{
+  margin:0 0 16px;
+  padding:18px 18px 8px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+}
+.fn-group h3{
+  margin:0 0 12px;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:.3px;
+  color:var(--accent);
+}
+.fn-table{
+  width:100%;
+  min-width:0;
+  border-collapse:collapse;
+  font-size:13.5px;
+}
+.fn-table thead th{
+  padding:8px 10px;
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  font-size:12.5px;
+  font-weight:600;
+}
+.fn-table tbody td{
+  padding:8px 10px;
+  border-top:1px solid var(--line2);
+  color:#CFDAE8;
+  vertical-align:top;
+}
+.fn-table tbody td:first-child{color:#FFFFFF;font-weight:600;width:200px;}
+.fn-table tbody tr:nth-child(even){background:rgba(255,255,255,.025);}
+.fn-table tbody tr:hover{background:rgba(255,177,70,.07);}
+.fn-note{margin-top:4px;padding:12px 16px;border-left:3px solid var(--teal);border-radius:0 10px 10px 0;background:rgba(72,210,198,.07);font-size:13.5px;color:#C9D6E4;}
+/* ---------- 页脚 ---------- */
+.footer{
+  padding:18px 28px 22px;
+  text-align:center;
+  font-size:12.5px;
+  color:var(--dim);
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+}
+/* ---------- 响应式 ---------- */
+@media (max-width:768px){
+  .page-wrapper{padding:14px 8px 30px;}
+  .page{border-radius:14px;}
+  .header{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 18px;font-size:12px;}
+  .content{padding:26px 20px 24px;}
+  h1{font-size:24px;}
+  .tagline{font-size:15px;}
+  h2{font-size:18px;margin-top:34px;}
+  p{font-size:14.5px;}
+  ul li,ol li{font-size:14px;}
+  .hero-preview{grid-template-columns:1fr;padding:18px;}
+  .mock-num{font-size:36px;}
+  .stats{grid-template-columns:1fr 1fr;}
+  table{font-size:13px;min-width:520px;}
+  thead th,tbody td{padding:9px 10px;}
+}
+/* ---------- 打印 ---------- */
+@media print{
+  body{background:#fff;font-size:12pt;}
+  .page-wrapper{padding:0;}
+  .page{max-width:none;border:none;box-shadow:none;background:#fff;border-radius:0;}
+  .header{background:#F1F3F6;color:#111;border-bottom:1px solid #ccc;}
+  .header .right{color:#555;}
+  .content{padding:0 6mm;}
+  h1{color:#111;background:none;-webkit-text-fill-color:#111;}
+  .tagline{color:#B0690B;}
+  .abstract{background:#FAFAFA;color:#333;border-left:4px solid #B0690B;}
+  p,ul li,ol li,tbody td{color:#222;}
+  h2{color:#111;border-bottom:1px solid #ccc;page-break-after:avoid;}
+  .hero-preview{display:none;}
+  thead th{background:#333 !important;color:#fff !important;}
+  tbody tr:nth-child(even){background:#F6F6F6;}
+  .table-wrapper{border:1px solid #ccc;}
+  .chart-placeholder{border:1px dashed #999;background:#FAFAFA;color:#555;}
+  .footer{color:#555;border-top:1px solid #ccc;background:#fff;}
+  h2,table,.table-wrapper{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="page">
+
+    <div class="header">
+      <span class="left">CountdownSideBar 侧边倒计时 · 产品介绍</span>
+      <span class="right">v2.1 · Windows 10 / 11</span>
+    </div>
+
+    <div class="content">
+
+      <h1>CountdownSideBar 侧边倒计时</h1>
+      <div class="tagline">一款常驻桌面边缘、永远不挡事的倒数日软件</div>
+      <div class="meta">
+        <span><strong>版本</strong>v2.1</span>
+        <span><strong>平台</strong>Windows 10 / 11 桌面版</span>
+        <span><strong>运行环境</strong>.NET Framework 4.8（系统自带）</span>
+        <span><strong>程序体积</strong>约 451 KB</span>
+        <span><strong>安装方式</strong>绿色免安装</span>
+      </div>
+
+      <div class="abstract">
+        摘要：CountdownSideBar 是一款专注于“安静地把倒计时放在你眼前”的 Windows 桌面软件。它以无边框半透明小窗的形式停靠在桌面边缘，支持多个目标并行显示、倒计时与正计时双模式，并在全屏播放视频、游戏或演示时自动沉底或收缩成迷你条；配合 20 套配色预设、背景图片定制与按天数自动切换的标语文案，既适合学生备考、教室大屏，也适合项目节点盯进度与桌面美化。程序零第三方依赖、绿色免安装，全部数据保存在同目录的单个配置文件里。本页所列功能均逐一核对过程序源码，未收录任何尚未实现的规划功能。
+      </div>
+
+      <div class="hero-preview">
+        <div class="mock-wrap">
+          <div class="mock-side">
+            <div class="mock-head">
+              <span>距离 <b>高考</b> 还有</span>
+              <span class="mock-badge">运行中</span>
+            </div>
+            <div class="mock-num-row">
+              <span class="mock-num">128</span>
+              <span class="mock-unit">天</span>
+              <span class="mock-clock">08:32:11</span>
+            </div>
+            <div class="mock-track"><i style="width:62%"></i></div>
+            <div class="mock-foot">每一次提笔，都算数</div>
+          </div>
+          <div class="mock-mini">
+            <div class="m1">距离 高考 还有</div>
+            <div class="m2">128天</div>
+            <div class="m3"><i></i></div>
+          </div>
+          <div class="mock-note">上：常规侧边小窗（示意）　下：全屏时自动收缩的迷你条（196 × 76）</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">451 KB</div><div class="k">单文件主程序</div></div>
+          <div class="stat"><div class="v">0</div><div class="k">第三方依赖</div></div>
+          <div class="stat"><div class="v">20 套</div><div class="k">整套配色预设</div></div>
+          <div class="stat"><div class="v">1068 行</div><div class="k">单文件源码可二次开发</div></div>
+        </div>
+      </div>
+
+      <h2>一、产品概览</h2>
+      <p>桌面倒计时类工具并不少见，但它们普遍存在同一个问题：要么一直悬在最上层遮挡内容，要么需要在 App、浏览器标签之间来回切换。CountdownSideBar 的设计出发点很明确——把“还剩多少天”这件事做得存在感极低，却又能一眼看见。</p>
+      <p>它以一个圆角半透明小窗的形式停在屏幕边缘，常驻显示但不占任务栏；检测到前台全屏或最大化窗口时，小窗会自动让位。所有功能围绕“安静、清晰、可控”三点展开：</p>
+      <ul>
+        <li><strong>安静</strong>：全屏自动让位、支持整窗点击穿透、临近 7 天才出现呼吸提示，平时绝不打扰。</li>
+        <li><strong>清晰</strong>：大号天数数字 + 实时时钟 + 进度条，数字字号可调到 72 px，教室后排也能看清。</li>
+        <li><strong>可控</strong>：位置、尺寸、透明度、配色、字体、标语全部可自定义，且每个目标独立记忆。</li>
+      </ul>
+
+      <h2>二、核心卖点</h2>
+      <p>以下 12 项卖点逐条对应程序中的真实实现，可直接用于商品详情页与宣传物料。</p>
+      <ul>
+        <li><strong>侧边停靠，永不挡事。</strong>无边框半透明玻璃质感小窗，可停在屏幕任意位置，置顶常显、不占任务栏；松手后在 26 像素内自动吸附到屏幕边缘，也可一键锁定位置防止误拖。</li>
+        <li><strong>多目标并行，一个目标一个窗口。</strong>高考、纪念日、项目上线可以同时存在，每个目标各自独立成窗、各自记忆位置与尺寸，互不干扰，还支持“全部显示 / 全部隐藏”。</li>
+        <li><strong>全屏自动让位。</strong>检测到前台全屏或最大化窗口时，小窗要么沉到窗口最底层（不缩小，且每秒压回底部，绝不遮挡视频），要么收缩成 196 × 76 的迷你条（双击可临时展开），两种策略独立开关、二选一。</li>
+        <li><strong>点击穿透，彻底不挡鼠标。</strong>开启后鼠标事件整窗穿透到下层窗口，看电影、打游戏时小窗看得见、摸不着，完全不影响操作。</li>
+        <li><strong>倒计时 + 正计时双模式。</strong>不只是“还有多少天”，正计时模式可记录“已经坚持了多少天”，适用于戒烟、健身、背单词、早睡等累积型打卡场景。</li>
+        <li><strong>20 套配色预设 + 四主色自定义。</strong>内置午夜蓝、松林绿、赛博、鎏金、樱花等 20 套整套配色，一键切换；也可自行挑选窗口背景、卡片背景、强调色、文字颜色，系统自动推导出全套界面配色，保证任意配色下都协调不脏。</li>
+        <li><strong>背景图片自定义。</strong>可将喜欢的图片设为小窗与主窗口背景，支持填充 / 适应 / 拉伸三种方式，并可调不透明度、0–12 级模糊与色调暗化，图片再花也保证数字清晰可读。</li>
+        <li><strong>标语节点，按天数自动切换文案。</strong>可自建“剩余 ≤ N 天”的节点（如 ≤100 天 / ≤30 天 / ≤7 天 / ≤1 天），进入区间自动切换寄语；旧版“每日寄语”文本可一键迁移为节点。</li>
+        <li><strong>临近 7 天呼吸提示。</strong>只在剩余 7 天以内启用边框呼吸动效，越到最后越有紧迫感，平时保持绝对安静。</li>
+        <li><strong>大号数字，字体字号可调。</strong>数字字号 24–72 px 无极调节，字体可自定义并配置后备字体（默认 Consolas），标题与日期字号专门配比，教室后排、工位对面都能一眼看清。</li>
+        <li><strong>开机自启 + 托盘常驻 + 单实例保护。</strong>开机自动启动（可静默启动，只显示小窗不弹设置窗口）；关闭主窗口即最小化到托盘，托盘菜单可启停、可退出；内置单实例锁，重复启动会提示，避免多进程并发写坏配置。</li>
+        <li><strong>绿色单文件数据，一键导入导出。</strong>目标、位置、外观、文案全部保存在同级 config.json，复制整个目录即可迁移到新电脑，控制台内可一键导出 / 导入配置。</li>
+      </ul>
+
+      <h2>三、产品优点</h2>
+      <p>相比“能显示倒计时”这个最低要求，CountdownSideBar 的优势更多体现在安装、稳定与定制这些长期体验上。</p>
+      <ol>
+        <li><strong>零安装、零依赖。</strong>使用系统自带的 .NET Framework 4.8，不需要安装运行库、不需要管理员权限，解压双击即可使用。</li>
+        <li><strong>极致轻量。</strong>主程序单个 exe 约 451 KB，常驻内存开销极小，老旧电脑也能流畅运行。</li>
+        <li><strong>数据完全私有。</strong>不联网、不上传云端，也几乎不写注册表（仅在开启开机自启时写入一条当前用户启动项），适合对隐私敏感的用户。</li>
+        <li><strong>稳定性有兜底。</strong>配置采用“临时文件 + 原子替换”方式写入并保留备份；配置损坏时自动备份为带时间戳的副本并弹窗告知，而不是悄悄重置；未捕获异常会写入日志文件，便于定位问题。</li>
+        <li><strong>界面足够体面。</strong>令牌化配色体系 + 玻璃质感小窗 + 克制的 180 毫秒过渡动效，摆在桌面不廉价，也适合截图做演示、直播出镜。</li>
+        <li><strong>省心细节。</strong>拖动位置自动记忆、边缘自动吸附、退出时自动保存；改乱了还能“重置外观”一键回到默认。</li>
+        <li><strong>可定制、可二次开发。</strong>单文件源码、结构清晰，附带一键编译脚本，改颜色、改字号、改逻辑都能自己上手。</li>
+        <li><strong>多显示器与高 DPI 友好。</strong>支持负坐标（副屏在主屏左侧或上方）、虚拟屏幕边界钳制，拖动按 DPI 精确换算，高分屏不漂移、不抖动。</li>
+      </ol>
+
+      <h2>四、典型应用场景</h2>
+      <ol>
+        <li>考试倒计时：高考、中考、考研、四六级、公务员考试，学生贴在桌面角落，每天抬头就看到还剩几天。</li>
+        <li>教室与培训机构大屏：配合大字号与深色主题，投影到后排也能看清；全屏播放课件时自动避让，不遮内容。</li>
+        <li>项目里程碑：产品上线、大促开始、交付截止，项目组工位常驻一个小窗，进度条一眼看出时间过去了多少。</li>
+        <li>纪念日与婚礼：把“距离我们的婚礼还有”放在桌面，配合背景图片与自定义配色做成专属样式。</li>
+        <li>假期、年假与发薪日倒数：纯按天倒数的轻量场景，设置一次就不用再管。</li>
+        <li>坚持打卡（正计时）：戒烟第几天、连续健身第几天、背单词第几天，用“已坚持”做正向激励。</li>
+        <li>主播与直播场景：开播倒计时、抽奖倒数，配合点击穿透或全屏避让，完全不影响直播操作。</li>
+        <li>会议与培训限时：演讲限时、茶歇倒计时，迷你条形态放在屏幕角落，不干扰投屏内容。</li>
+      </ol>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>典型场景</th><th>推荐形态</th><th>建议开启的功能</th><th>推荐配色</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>考试倒计时</td><td>常规侧边小窗</td><td>大字号、临近呼吸提示、边缘吸附</td><td>午夜蓝 / 松林绿（醒目不刺眼）</td></tr>
+            <tr><td>教室大屏演示</td><td>常规侧边小窗</td><td>全屏时置底、72 px 大字号、深色主题</td><td>赛博 / 深靛（远距离对比度高）</td></tr>
+            <tr><td>项目节点盯进度</td><td>多窗口并行</td><td>多目标管理、进度条、托盘常驻</td><td>薄荷 / 青瓷（专业冷静）</td></tr>
+            <tr><td>游戏与观影</td><td>点击穿透或迷你条</td><td>点击穿透、全屏时改用迷你条</td><td>任意（建议低不透明度）</td></tr>
+            <tr><td>打卡与习惯养成</td><td>常规侧边小窗</td><td>正计时模式、标语节点</td><td>落日 / 樱花（温暖正向）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>五、目标买家画像</h2>
+      <p>CountdownSideBar 的用户高度集中在“需要一个显眼但不打扰的倒计时”的人群，可按下表定位推广渠道与文案侧重。</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>目标人群</th><th>典型需求</th><th>最能打动他的卖点</th><th>建议推广话术</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>学生与备考人群</td><td>每天看到考试还剩几天，需要安静不打扰</td><td>侧边停靠、全屏自动让位、大字号</td><td>贴在屏幕边上，玩游戏看视频它自动让位，抬头就能看见还剩几天。</td></tr>
+            <tr><td>教师与培训讲师</td><td>教室投影要让后排也看得清</td><td>24–72 px 大字号、自定义配色、背景图</td><td>字能调到后排看得清，配色还能配成学校的主题色。</td></tr>
+            <tr><td>职场项目与运营</td><td>同时盯多个项目节点与活动开始时间</td><td>多目标并行、进度条、托盘常驻</td><td>几个节点各开一个小窗，谁还剩几天一目了然。</td></tr>
+            <tr><td>主播与内容创作者</td><td>出镜画面要好看，还不能影响操作</td><td>点击穿透、玻璃质感、20 套配色</td><td>鼠标能穿透、配色随便换，画面里好看又不挡操作。</td></tr>
+            <tr><td>桌面美化与效率控</td><td>桌面要干净精致，控件要能换样子</td><td>背景图、模糊与暗化、四主色自定义</td><td>整套主题随便配，还能拿自己的图片当底。</td></tr>
+            <tr><td>自研爱好者与开发者</td><td>想改功能、想集成到自己的项目</td><td>1068 行单文件源码、零依赖、一键编译</td><td>源码就一个文件，改完一条命令重新编译。</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>六、与同类产品的差异化优势</h2>
+      <p>同类产品解决的是“有没有倒计时”，CountdownSideBar 解决的是“倒计时怎么做到存在感极低却一眼可见”。</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>能力维度</th><th>CountdownSideBar</th><th>传统桌面倒计时小工具</th><th>在线倒计时网页 / 手机 App</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>安装与依赖</td><td>绿色免安装，零第三方依赖，使用系统自带运行库</td><td>多需安装包，部分捆绑推广</td><td>需常驻浏览器标签或安装手机应用</td></tr>
+            <tr><td>与全屏程序共存</td><td>自动沉底或收缩为迷你条，全程不遮挡</td><td>多数常悬最上层，遮挡视频与游戏</td><td>不适用（运行在手机上）</td></tr>
+            <tr><td>点击穿透</td><td>支持整窗鼠标穿透</td><td>极少支持</td><td>不支持</td></tr>
+            <tr><td>多目标并行</td><td>每个目标独立成窗、独立记忆位置</td><td>通常仅支持单个目标</td><td>需在应用内来回切换</td></tr>
+            <tr><td>正计时（坚持天数）</td><td>与倒计时同一入口，一键切换</td><td>多数只做倒计时</td><td>部分支持</td></tr>
+            <tr><td>外观定制深度</td><td>20 套预设 + 四主色自定义 + 背景图（可调模糊、暗化）</td><td>固定皮肤或简单换色</td><td>基本不可改</td></tr>
+            <tr><td>数据归属</td><td>纯本地单文件，可导出导入、可整体迁移</td><td>本地但不可控、不透明</td><td>数据存放在厂商服务器</td></tr>
+            <tr><td>可二次开发</td><td>单文件源码随包交付</td><td>闭源</td><td>不可</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>七、技术规格一览</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>规格项</th><th>参数</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>运行平台</td><td>Windows 10 / 11 桌面版</td><td>单机运行，无需网络</td></tr>
+            <tr><td>运行环境</td><td>.NET Framework 4.8</td><td>系统自带，无需额外安装</td></tr>
+            <tr><td>程序形态</td><td>单文件 exe，约 451 KB</td><td>绿色免安装，删除目录即卸载</td></tr>
+            <tr><td>主控制台尺寸</td><td>1240 × 820（可最大化）</td><td>五个功能页：目标管理 / 显示样式 / 窗口行为 / 标语节点 / 高级设置</td></tr>
+            <tr><td>小窗默认尺寸</td><td>380 × 190，可自定义</td><td>支持输入 X / Y / 宽 / 高，每个目标独立记忆</td></tr>
+            <tr><td>迷你条尺寸</td><td>196 × 76</td><td>全屏时自动收缩，双击可临时展开</td></tr>
+            <tr><td>数字字号范围</td><td>24 – 72 px</td><td>无极滑杆调节</td></tr>
+            <tr><td>配色预设</td><td>20 套</td><td>一键整套切换，另支持自定义主题保存与删除</td></tr>
+            <tr><td>配置文件</td><td>config.json（程序同级目录）</td><td>原子写入、保留备份、损坏自动备份并提示</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>八、界面一览</h2>
+      <p>主控制台采用无边框圆角窗口与左侧五页导航，视觉上沿用软件内置的令牌化配色体系；下图为界面示意位，正式发布时可替换为实机截图。</p>
+      <div class="chart-placeholder">
+        <div class="icon">界面截图位</div>
+        <div class="label">[此处插入：① 主控制台“目标管理”页截图；② “显示样式”页 20 套配色网格截图；③ 侧边小窗与迷你条实机效果对比]</div>
+      </div>
+
+      <h2>九、完整功能清单</h2>
+    <p class="lead">下表逐项核对自源码（<code>CountdownSideBar.cs</code>，v2.1，1068 行），按控制台五大功能页分组，并补充侧边小窗交互与系统集成能力。"默认值"取自程序内置默认配置，即首次运行生成 <code>config.json</code> 时的初始值。</p>
+
+    <div class="fn-group">
+      <h3>9.1 目标管理（控制台第 1 页）</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>目标总数提示</td><td>卡片右上角显示"共 N 个目标 · 每个目标一个独立小窗"；首次启动含 1 个目标，目标时间 = 当前 +30 天</td></tr>
+          <tr><td>Hero 预览卡</td><td>实时展示当前目标的剩余天数大数字、单位"天"、时分秒、进度条、起始/目标时间、进度百分比（天数 40 px、时钟 22 px）</td></tr>
+          <tr><td>目标列表</td><td>每行显示名称、状态徽章（启用中 / 未显示 / 已暂停）、模式与时间说明、剩余天数、启用开关、编辑、删除</td></tr>
+          <tr><td>单击行切换当前目标</td><td>点击任意目标行即把它设为"当前目标"，Hero 卡随之刷新；默认第 1 个</td></tr>
+          <tr><td>悬停高亮</td><td>鼠标移入行时整行高亮，当前目标行常亮</td></tr>
+          <tr><td>＋ 新建目标</td><td>弹出编辑对话框，保存后加入列表并设为当前目标；默认名称"新目标"、目标时间 +30 天</td></tr>
+          <tr><td>行内启用开关</td><td>单独开/关某个目标的侧窗与计时；开启时若侧边栏未运行会自动启动</td></tr>
+          <tr><td>✎ 编辑目标</td><td>弹出编辑对话框修改名称、日期、时间、计时模式</td></tr>
+          <tr><td>✕ 删除目标</td><td>弹确认框后删除并关闭其小窗；删空后自动补 1 个"新目标"</td></tr>
+          <tr><td>全部显示 / 全部隐藏</td><td>一键让所有目标显示小窗并继续计时（同时启动侧边栏），或全部暂停并停止侧边栏</td></tr>
+          <tr><td>编辑对话框·字段</td><td>名称（留空回退为"新目标"）、日期 <code>yyyy-MM-dd</code>、时间 <code>HH:mm</code></td></tr>
+          <tr><td>编辑对话框·快捷日期</td><td>今天 / 明天 / 7 天后 / 30 天后 / 1 年后 一键填充日期</td></tr>
+          <tr><td>编辑对话框·计时模式</td><td>倒计时 / 正计时 二选一，切换模式会重置起始时间；默认倒计时</td></tr>
+          <tr><td>编辑对话框·校验与交互</td><td>日期时间无法解析时行内红字提示且不关闭窗口；顶部 34 px 区域可拖动</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.2 显示样式（控制台第 2 页）</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>主题配色预设</td><td>20 套整套配色一次切换：午夜蓝、石墨灰、松林绿、青瓷、落日、靛紫、琥珀、樱花、赛博、深海、墨玉、雾蓝、深靛、苔原、赤陶、酒红、极光、鎏金、紫灰、薄荷；默认午夜蓝</td></tr>
+          <tr><td>预设构成</td><td>每套预设包含窗口背景 + 卡片背景 + 强调色三个色值，其余界面配色令牌由三色自动推导</td></tr>
+          <tr><td>自定义颜色</td><td>窗口背景 / 卡片背景 / 强调色 / 文字颜色 四行，改动即时生效；默认 #1A1F2B / #252E40 / #FFB146 / #FFFFFF</td></tr>
+          <tr><td>色板与取色器</td><td>每行 20 个常用色块点选即用，行末"＋"调出系统取色器可选任意颜色</td></tr>
+          <tr><td>保存为我的主题</td><td>把当前四色存为自定义主题，自动命名"我的配色 MMdd-HHmm"</td></tr>
+          <tr><td>我的主题列表</td><td>标签形式展示，点击即套用，✕ 可删除</td></tr>
+          <tr><td>恢复默认配色</td><td>四色与主题名一键回到默认（午夜蓝）</td></tr>
+          <tr><td>数字字体</td><td>文本框输入字体名，支持逗号分隔后备字体；回车或失焦时才写入配置；默认 Consolas</td></tr>
+          <tr><td>侧窗数字字号</td><td>滑杆调节大号数字基准字号，默认 40 px（范围 24–72 px）</td></tr>
+          <tr><td>卡片不透明度</td><td>控制各功能卡片背景的透明程度，默认 88%</td></tr>
+          <tr><td>主窗口不透明度</td><td>控制整个控制台窗口的不透明度，默认 100%（下限 50%）</td></tr>
+          <tr><td>过渡动效</td><td>控制进度条与数字变化的过渡动画，默认开</td></tr>
+          <tr><td>临近呼吸提示</td><td>仅剩余 ≤7 天的小窗出现边框呼吸动效，默认开</td></tr>
+          <tr><td>背景图片</td><td>选择 PNG / JPG / JPEG / BMP / GIF / WEBP 图片作为主窗口与小窗背景，带缩略图与文件名，可一键移除；默认未选择</td></tr>
+          <tr><td>图片拉伸方式</td><td>填充 / 适应 / 拉伸 三选一，默认填充（UniformToFill）</td></tr>
+          <tr><td>图片不透明度</td><td>滑杆调节背景图透明程度，默认 55%</td></tr>
+          <tr><td>模糊</td><td>滑杆 0–12 级模糊背景图，默认 0</td></tr>
+          <tr><td>色调叠加</td><td>用黑色叠加压暗背景图保证数字可读，默认 35%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.3 窗口行为（控制台第 3 页）</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>全屏时置底</td><td>检测到前台全屏/最大化时把侧窗沉到最底层，不缩小窗口，并每秒压回底部保持不遮挡；默认开</td></tr>
+          <tr><td>全屏时改用迷你条</td><td>改为收缩成 196 × 76 迷你条，与"置底"二选一；默认关</td></tr>
+          <tr><td>边缘自动吸附</td><td>拖动松手后 26 像素内自动贴回屏幕边缘；默认开</td></tr>
+          <tr><td>锁定位置</td><td>禁止拖动与吸附，防止误碰；默认关</td></tr>
+          <tr><td>默认贴边方向</td><td>左侧 / 右侧，决定新窗口的初始水平落点；默认左侧</td></tr>
+          <tr><td>点击穿透</td><td>鼠标事件整窗穿透到下层窗口（开启后小窗按钮不再响应）；默认关</td></tr>
+          <tr><td>小窗不透明度</td><td>控制所有侧边小窗的不透明度，默认 82%</td></tr>
+          <tr><td>新窗口位置与尺寸</td><td>输入 X / Y / 宽 / 高 后点"应用"，仅影响后续新建小窗（已有窗口按其自身记忆显示；宽最小 300、高最小 150）；默认 X=0、Y=120、宽=380、高=190</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.4 标语节点（控制台第 4 页）</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>节点列表</td><td>按天数从大到小展示各节点（≤ N 天 → 对应文案），默认空</td></tr>
+          <tr><td>编辑 / 删除节点</td><td>就地编辑触发天数与文案（可保存或取消），✕ 移除该节点</td></tr>
+          <tr><td>添加节点</td><td>输入"≤ 天数"（默认 7）与文案，点"＋ 添加节点"新增</td></tr>
+          <tr><td>匹配规则</td><td>取"最接近的一档"：剩余 5 天命中 ≤7 天节点</td></tr>
+          <tr><td>回退策略</td><td>无节点命中时回退为旧版每日寄语，按日期轮播</td></tr>
+          <tr><td>旧版每日寄语迁移</td><td>检测到旧版文本时出现迁移卡片，按 100 / 30 / 7 / 1 天阈值一键转成节点</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.5 高级设置（控制台第 5 页）</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>开机自动启动</td><td>写入当前用户启动项 <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>，启动参数带 <code>--autostart</code>（静默启动，不弹主设置窗口），可随时关闭并清理该项；默认关</td></tr>
+          <tr><td>关闭主窗口时最小化到托盘</td><td>关闭控制台后程序继续在托盘运行；默认开</td></tr>
+          <tr><td>配置文件位置</td><td>直接显示 config.json 的完整路径（默认程序同级目录）</td></tr>
+          <tr><td>打开所在目录 / 导出配置 / 导入配置</td><td>资源管理器定位并选中 config.json；把当前配置另存为 JSON；用所选 JSON 覆盖 config.json 并提示"重启后生效"</td></tr>
+          <tr><td>重置外观</td><td>配色回到午夜蓝默认、小窗不透明度回到 82%、卡片不透明度回到 88%</td></tr>
+          <tr><td>运行状态与启停</td><td>显示"运行中 · N 个小窗"或"已停止"（默认已停止），并提供"启动侧边倒计时 / 停止全部"一键操作</td></tr>
+          <tr><td>关于</td><td>显示版本与实现说明（v2.1 · C# / WPF · 无 XAML、无第三方依赖）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.6 侧边小窗交互</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>小窗形态</td><td>无边框、透明、圆角 16、置顶显示、不占任务栏；玻璃渐变背景 + 投影阴影</td></tr>
+          <tr><td>小窗内容</td><td>标题（"距离 X 还有" / "X 已过期" / "已坚持 X"）、大号天数、单位"天"、HH:MM:SS 时钟、进度条、底部标语或日期</td></tr>
+          <tr><td>进度条</td><td>按"已过时间 ÷ 总时长"实时推进</td></tr>
+          <tr><td>顶栏三按钮</td><td>↻ 切换下一个目标（仅在只有 1 个小窗且目标不少于 2 个时生效）、✎ 编辑目标、✕ 隐藏此窗口</td></tr>
+          <tr><td>拖动窗口</td><td>按住小窗任意处拖动，采用绝对坐标 + DPI 换算（鼠标与触控均不做加速度预测），松手自动吸附并保存位置</td></tr>
+          <tr><td>双击切换形态</td><td>双击在常规窗与迷你条之间切换；处于全屏迷你状态时双击可临时展开</td></tr>
+          <tr><td>右键菜单</td><td>编辑目标 / 切换下一个目标 / 隐藏此窗口 / 暂停此目标 / 停止全部窗口 / 退出</td></tr>
+          <tr><td>迷你条</td><td>196 × 76，显示"距离 X 还有" + "N天" + 迷你进度条（需在全屏策略中启用，默认关）</td></tr>
+          <tr><td>位置与尺寸记忆</td><td>每个目标独立记忆窗口 Left / Top / 宽 / 高，支持负坐标；未定位时按 32 px 层叠偏移自动排列</td></tr>
+          <tr><td>屏幕边界钳制</td><td>拖动后自动限制在虚拟屏幕范围内，防止窗口拖丢</td></tr>
+          <tr><td>多显示器支持</td><td>支持副屏位于主屏左侧或上方的负坐标场景；全屏判定基于窗口所在显示器的监视器信息</td></tr>
+          <tr><td>呼吸提示</td><td>剩余 ≤7 天时边框呼吸动效（全程序唯一一处无限动画），随"临近呼吸提示"开关</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fn-group">
+      <h3>9.7 系统集成与运行保障</h3>
+      <table class="fn-table">
+        <thead><tr><th>功能项</th><th>作用说明与默认值</th></tr></thead>
+        <tbody>
+          <tr><td>托盘图标</td><td>常驻系统托盘，悬浮提示"侧边倒计时"</td></tr>
+          <tr><td>托盘右键菜单</td><td>打开主设置 / 启动·继续已开启的目标 / 停止全部倒计时窗口 / 打开配置文件目录 / 退出</td></tr>
+          <tr><td>托盘左键单击</td><td>在主设置窗口显示与隐藏之间切换</td></tr>
+          <tr><td>单实例保护</td><td>系统互斥锁保证只运行一个实例，重复启动弹提示并直接退出，避免多进程并发写坏配置</td></tr>
+          <tr><td>静默启动</td><td>带 <code>--autostart</code> 或 <code>--silent</code> 参数启动时不弹主设置窗口，只显示侧边倒计时小窗（仅开机自启时使用）</td></tr>
+          <tr><td>全屏检测</td><td>排除程序自身窗口与桌面/任务栏类窗口，24 物理像素容差；独占全屏与最大化/无边框全屏均可识别（最大化同样触发避让）</td></tr>
+          <tr><td>退出时自动保存</td><td>无论从托盘还是小窗菜单退出，都会把目标、位置、字号等改动写回配置</td></tr>
+          <tr><td>配置原子写入</td><td>先写 config.json.tmp，再用 File.Replace 替换并保留 config.json.bak，避免断电/崩溃留下半截文件</td></tr>
+          <tr><td>配置损坏保护</td><td>解析失败时把原文件备份为 config.json.corrupt-时间戳.json，改用默认配置启动并弹窗告知</td></tr>
+          <tr><td>配置结构版本迁移</td><td>旧版配置（无版本号）自动升级到当前结构版本（Version = 2）</td></tr>
+          <tr><td>启动参数校验</td><td>加载时对宽高、字号、不透明度、颜色、图片路径等做范围钳制与失效清理</td></tr>
+          <tr><td>错误日志</td><td>未捕获异常写入 exe 同级 CountdownSideBar-error.log；UI 线程异常弹窗告知并尽量继续运行，同类错误 30 秒内只记一条</td></tr>
+          <tr><td>极简滚动条</td><td>控制台内容超出时可用鼠标滚轮滚动，滚动条为 10 px 宽、4 px 圆角滑块的极简样式</td></tr>
+          <tr><td>窗口标题栏交互</td><td>控制台左上角红黄绿三按钮（关闭 / 最小化 / 最大化），标题栏可拖动、双击可最大化或还原</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="fn-note">说明：当前版本<strong>未实现全局快捷键</strong>（属规划中功能），不在交付范围内。</p>
+
+    <h2>十、交付与授权</h2>
+      <p>以下为建议的交付范围与售卖信息位，涉及定价与授权策略的内容请卖家按实际方案填写后再对外发布。</p>
+      <ul>
+        <li><strong>建议交付内容：</strong>程序目录（主程序 + 配置文件 + 使用说明）；如需源码交付，附加单文件源码与一键编译脚本。</li>
+        <li><strong>授权方式建议：</strong>个人版 / 商用版 / 源码授权版分档，明确可分发范围。</li>
+        <li><strong>售后建议：</strong>提供配置迁移指导与常见问题说明，并明确“规划中功能不属于已交付功能”。</li>
+      </ul>
+      <div class="chart-placeholder">
+        <div class="icon">售卖信息位</div>
+        <div class="label">[此处填写：定价、授权方式、交付清单、联系方式]</div>
+      </div>
+
+      <h2>十一、售卖前需如实告知的事项</h2>
+      <p>为避免售后争议，以下情况建议在商品详情页中明确说明。</p>
+      <ul>
+        <li>全局快捷键为规划中功能，当前版本尚未实现，请勿作为卖点宣传。</li>
+        <li>点击穿透为整窗穿透，开启后小窗顶部按钮不再响应，需从托盘菜单或设置控制台退出该模式。</li>
+        <li>最大化窗口同样会被判定为“全屏”，此时小窗会按设置自动避让，属预期行为。</li>
+        <li>小窗尺寸不支持拖拽缩放，如需修改请到“窗口行为”页输入 X / Y / 宽 / 高后点击“应用”。</li>
+        <li>导入配置需重启程序后生效。</li>
+      </ul>
+
+    </div>
+
+    <div class="footer">
+      CountdownSideBar v2.1 · C# / WPF · 绿色免安装 · 第 1 页，共 1 页
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
